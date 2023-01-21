@@ -37,4 +37,23 @@ const getOneGear = async (req: Request, res: Response): Promise<Response> => {
   }
 };
 
-export { getAllGear, getOneGear };
+//post
+
+const newGear = async (req: Request, res: Response): Promise<Response> => {
+  try {
+    const { name, price, status, view } = req.body;
+    const newGear = await gearModel.create({ name, price, status, view });
+
+    return res.status(201).json({
+      messager: "new gear added successfully",
+      data: newGear,
+    });
+  } catch (error) {
+    return res.status(400).json({
+      message: "an error occurred while trying to create new hair gears",
+      data: error,
+    });
+  }
+};
+
+export { getAllGear, getOneGear, newGear };
