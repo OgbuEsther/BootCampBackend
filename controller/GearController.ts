@@ -41,8 +41,14 @@ const getOneGear = async (req: Request, res: Response): Promise<Response> => {
 
 const newGear = async (req: Request, res: Response): Promise<Response> => {
   try {
-    const { name, price, status, view } = req.body;
-    const newGear = await gearModel.create({ name, price, status, view });
+    const { name, price, status, views, image } = req.body;
+    const newGear = await gearModel.create({
+      name,
+      price,
+      status,
+      views,
+      image,
+    });
 
     return res.status(201).json({
       messager: "new gear added successfully",
@@ -56,4 +62,25 @@ const newGear = async (req: Request, res: Response): Promise<Response> => {
   }
 };
 
-export { getAllGear, getOneGear, newGear };
+const GearViews = async (req: Request, res: Response): Promise<Response> => {
+  try {
+    const views = await gearModel.findByIdAndUpdate(
+      req.params.gearID,
+      {
+        $push: { views: req.params.ip },
+      },
+      { new: true }
+    );
+    return res.status(200).json({
+      message: "Successfully got users views on this house",
+      data: views,
+    });
+  } catch (error) {
+    return res.status(400).json({
+      message: "Couldn't get users views",
+      data: error,
+    });
+  }
+};
+
+export { getAllGear, getOneGear, newGear, GearViews };

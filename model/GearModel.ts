@@ -4,7 +4,8 @@ interface gearProps {
   name: string;
   price: string;
   status: boolean;
-  view: [];
+  image: string;
+  views: [];
 }
 
 interface Igear extends gearProps, mongoose.Document {}
@@ -20,7 +21,11 @@ const gearSchema = new mongoose.Schema({
   status: {
     type: Boolean,
   },
-  view: {
+  image: {
+    type: String,
+    required: [true, "please enter an image"],
+  },
+  views: {
     type: [],
   },
 });
