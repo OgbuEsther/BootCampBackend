@@ -2,12 +2,14 @@ import mongoose from "mongoose";
 
 const URI = "mongodb://0.0.0.0:27017/BootCampPractice";
 
-mongoose.connect(URI);
 
-mongoose.connection
-  .on("open", () => {
-    console.log(`database connected`);
-  })
-  .once("error", () => {
-    console.log(`failed to connect to database`);
-  });
+ export const dbConfig = async() =>{
+  try {
+    const connect = await mongoose.connect(URI)
+    console.log(`db is connected to port : ${connect.connection.host}`)
+
+  } catch (error) {
+   console.log(`unable to connect to database`) 
+  }
+}
+
